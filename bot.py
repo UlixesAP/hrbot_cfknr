@@ -10,6 +10,7 @@ from maxapi.types import (
     CallbackButton,
     MessageButton,
     ButtonsPayload,
+    BotStarted,
 )
 
 logging.basicConfig(level=logging.INFO)
@@ -100,6 +101,15 @@ def make_vacation_submenu():
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
+
+
+@dp.bot_started()
+async def handle_bot_started(event: BotStarted):
+    await bot.send_message(
+        user_id=event.user.user_id,
+        text=MAIN_MENU_TEXT,
+        attachments=make_main_menu_buttons(),
+    )
 
 
 @dp.message_created(Command("start"))
