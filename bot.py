@@ -9,6 +9,7 @@ from maxapi.types import (
     MessageCallback,
     CallbackButton,
     MessageButton,
+    LinkButton,
     ButtonsPayload,
     BotStarted,
 )
@@ -99,6 +100,38 @@ def make_vacation_submenu():
     return [payload.pack()]
 
 
+DOCS_TEMPLATE_URL = "https://disk.360.yandex.ru/i/r1zZBtwUlUFYpw"
+
+
+def make_docs_buttons():
+    buttons = [
+        [LinkButton(text="Скачать шаблон", url=DOCS_TEMPLATE_URL)],
+        [MessageButton(text=MENU_VACATION)],
+        [MessageButton(text=MENU_DOCS)],
+        [MessageButton(text=MENU_DONOR)],
+        [MessageButton(text=MENU_EKEY)],
+        [MessageButton(text=MENU_DISMISSAL)],
+    ]
+    payload = ButtonsPayload(buttons=buttons)
+    return [payload.pack()]
+
+
+EKEY_TEMPLATE_URL = "https://disk.360.yandex.ru/i/lr_ad-2dM1Y22g"
+
+
+def make_ekey_buttons():
+    buttons = [
+        [LinkButton(text="Скачать шаблон", url=EKEY_TEMPLATE_URL)],
+        [MessageButton(text=MENU_VACATION)],
+        [MessageButton(text=MENU_DOCS)],
+        [MessageButton(text=MENU_DONOR)],
+        [MessageButton(text=MENU_EKEY)],
+        [MessageButton(text=MENU_DISMISSAL)],
+    ]
+    payload = ButtonsPayload(buttons=buttons)
+    return [payload.pack()]
+
+
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
 
@@ -130,13 +163,13 @@ async def handle_main_menu(event: MessageCreated):
         attachments = make_vacation_submenu()
     elif text == MENU_DOCS:
         text = DOCS_TEXT
-        attachments = make_main_menu_buttons()
+        attachments = make_docs_buttons()
     elif text == MENU_DONOR:
         text = DONOR_TEXT
         attachments = make_main_menu_buttons()
     elif text == MENU_EKEY:
         text = EKEY_TEXT
-        attachments = make_main_menu_buttons()
+        attachments = make_ekey_buttons()
     elif text == MENU_DISMISSAL:
         text = DISMISSAL_TEXT
         attachments = make_main_menu_buttons()
